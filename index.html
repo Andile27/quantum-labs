@@ -3,1360 +3,509 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quantum Star Labs | Build Your AI Model</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Quantum Labs AI</title>
     <style>
+        /* Simple fallback fonts instead of Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&family=Rajdhani:wght@400;500;700&display=swap');
+        
+        :root {
+            --quantum-primary: #7e22ce;
+            --quantum-secondary: #3b82f6;
+            --quantum-accent: #06b6d4;
+            --quantum-dark: #0f172a;
+            --quantum-darker: #020617;
+            --quantum-light: #f8fafc;
+            --quantum-glass: rgba(255, 255, 255, 0.08);
+            --quantum-border: rgba(255, 255, 255, 0.12);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        :root {
-            --primary: #6e3cfa;
-            --secondary: #2ad3c5;
-            --accent: #ff6b6b;
-            --dark: #0f172a;
-            --darker: #080c18;
-            --light: #f8fafc;
-            --gray: #94a3b8;
-            --success: #10b981;
         }
 
         body {
-            background-color: var(--darker);
-            color: var(--light);
-            overflow-x: hidden;
+            font-family: 'Roboto Mono', monospace;
+            background: linear-gradient(135deg, var(--quantum-darker) 0%, var(--quantum-dark) 100%);
+            color: var(--quantum-light);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Header & Navigation */
-        header {
-            padding: 20px 0;
-            position: fixed;
-            width: 100%;
-            z-index: 100;
-            background: rgba(8, 12, 24, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-        }
-
-        nav {
+        .header {
+            padding: 1rem 2rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid var(--quantum-border);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-shrink: 0;
         }
 
         .logo {
-            font-size: 28px;
-            font-weight: 800;
-            background: linear-gradient(to right, var(--secondary), var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            cursor: pointer;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 30px;
-        }
-
-        .nav-links a {
-            color: var(--light);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-            cursor: pointer;
-        }
-
-        .nav-links a:hover, .nav-links a.active {
-            color: var(--secondary);
-        }
-
-        .cta-button {
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            color: white;
-            border: none;
-            padding: 10px 25px;
-            border-radius: 30px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(106, 60, 250, 0.4);
-        }
-
-        /* Page Container */
-        .page-container {
-            min-height: 100vh;
-            padding-top: 80px;
-        }
-
-        .page {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            background: linear-gradient(to bottom, var(--darker), var(--dark));
-        }
-
-        .hero-content {
-            max-width: 600px;
-            z-index: 2;
-        }
-
-        .hero h1 {
-            font-size: 60px;
-            font-weight: 800;
-            margin-bottom: 20px;
-            line-height: 1.1;
-        }
-
-        .hero h1 span {
-            background: linear-gradient(to right, var(--secondary), var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p {
-            font-size: 18px;
-            color: var(--gray);
-            margin-bottom: 30px;
-            line-height: 1.6;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 15px;
-        }
-
-        .outline-button {
-            background: transparent;
-            color: var(--secondary);
-            border: 2px solid var(--secondary);
-            padding: 10px 25px;
-            border-radius: 30px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .outline-button:hover {
-            background: rgba(42, 211, 197, 0.1);
-        }
-
-        .hero-image {
-            position: absolute;
-            right: 0;
-            bottom: 0;
-            width: 50%;
-            z-index: 1;
-            opacity: 0.8;
-        }
-
-        /* Training Dashboard */
-        .dashboard {
-            padding: 100px 0;
-            background: var(--dark);
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .section-title h2 {
-            font-size: 40px;
-            margin-bottom: 15px;
-        }
-
-        .section-title p {
-            color: var(--gray);
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
-
-        .dashboard-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 15px;
-            overflow: hidden;
-        }
-
-        .training-section {
-            padding: 30px;
-            background: rgba(0, 0, 0, 0.2);
-        }
-
-        .training-section h3 {
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: var(--secondary);
-        }
-
-        .training-form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .form-group label {
-            font-weight: 500;
-            color: var(--gray);
-        }
-
-        .form-group input, .form-group textarea {
-            padding: 12px 15px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(255, 255, 255, 0.05);
-            color: white;
-            font-size: 16px;
-        }
-
-        .form-group textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-
-        .form-group input:focus, .form-group textarea:focus {
-            outline: 1px solid var(--primary);
-        }
-
-        .training-button {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s;
-            margin-top: 10px;
-        }
-
-        .training-button:hover {
-            background: var(--secondary);
-        }
-
-        .ai-preview {
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            background: rgba(0, 0, 0, 0.3);
-        }
-
-        .preview-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .preview-header h3 {
-            font-size: 24px;
-            color: var(--secondary);
-        }
-
-        .model-stats {
-            display: flex;
-            gap: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-
-        .stat {
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 24px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.5rem;
             font-weight: 700;
-            color: var(--secondary);
+            background: linear-gradient(135deg, var(--quantum-secondary) 0%, var(--quantum-accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .stat-label {
-            font-size: 14px;
-            color: var(--gray);
+        .controls {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
         }
 
-        .preview-chat {
+        #api-key-container {
+            padding: 1rem 2rem;
+            background: var(--quantum-glass);
+            border-bottom: 1px solid var(--quantum-border);
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            flex-shrink: 0;
+        }
+
+        #api-key-input {
+            padding: 0.5rem 1rem;
+            width: 250px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--quantum-border);
+            border-radius: 8px;
+            color: white;
+            font-family: inherit;
+        }
+
+        #api-key-input:focus {
+            outline: none;
+            border-color: var(--quantum-secondary);
+        }
+
+        #save-key-btn, #theme-toggle, #model-selector {
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, var(--quantum-primary) 0%, var(--quantum-secondary) 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        #model-selector {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid var(--quantum-border);
+        }
+
+        #chat-container {
             flex: 1;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 10px;
-            padding: 20px;
+            overflow-y: auto;
+            padding: 1rem;
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            max-height: 300px;
-            overflow-y: auto;
+            gap: 1rem;
+            min-height: 0;
         }
 
-        .chat-message {
-            padding: 12px 16px;
-            border-radius: 15px;
-            max-width: 80%;
+        .welcome-message {
+            text-align: center;
+            margin: auto;
+            max-width: 500px;
+        }
+
+        .welcome-message h2 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--quantum-secondary) 0%, var(--quantum-accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .welcome-message p {
+            font-size: 1rem;
             line-height: 1.5;
-            animation: fadeIn 0.3s ease;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+        }
+
+        .message {
+            max-width: 70%;
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            line-height: 1.4;
         }
 
         .user-message {
-            background: rgba(42, 211, 197, 0.15);
-            margin-left: auto;
-            border-bottom-right-radius: 5px;
+            align-self: flex-end;
+            background: linear-gradient(135deg, var(--quantum-primary) 0%, var(--quantum-secondary) 100%);
+            color: white;
         }
 
         .ai-message {
-            background: rgba(106, 60, 250, 0.15);
-            border-bottom-left-radius: 5px;
-        }
-
-        .chat-input {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .chat-input input {
-            flex: 1;
-            padding: 12px 15px;
-            border-radius: 20px;
-            border: none;
-            background: rgba(255, 255, 255, 0.07);
+            align-self: flex-start;
+            background: var(--quantum-glass);
+            border: 1px solid var(--quantum-border);
             color: white;
-            font-size: 16px;
         }
 
-        .chat-input input:focus {
-            outline: 1px solid var(--primary);
-        }
-
-        .chat-input button {
-            background: var(--primary);
-            color: white;
-            border: none;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: background 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .chat-input button:hover {
-            background: var(--secondary);
-        }
-
-        /* Export Section */
-        .export {
-            padding: 100px 0;
-            background: var(--dark);
-        }
-
-        .export-options {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 60px;
-        }
-
-        .export-card {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 15px;
-            padding: 30px;
-            transition: transform 0.3s, box-shadow 0.3s;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-
-        .export-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        }
-
-        .export-icon {
-            font-size: 50px;
-            margin-bottom: 20px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-align: center;
-        }
-
-        .export-card h3 {
-            font-size: 24px;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .export-card p {
-            color: var(--gray);
-            line-height: 1.6;
-            margin-bottom: 20px;
-            flex-grow: 1;
-        }
-
-        .export-card ul {
-            color: var(--gray);
-            margin-bottom: 25px;
-            padding-left: 20px;
-            flex-grow: 1;
-        }
-
-        .export-card ul li {
-            margin-bottom: 8px;
-        }
-
-        .export-button {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s;
-            text-align: center;
-            display: block;
-            text-decoration: none;
-        }
-
-        .export-button:hover {
-            background: var(--secondary);
-        }
-
-        /* Export Process */
-        .process {
-            padding: 80px 0;
-            background: rgba(0, 0, 0, 0.2);
-        }
-
-        .process-steps {
-            display: flex;
-            justify-content: space-between;
-            max-width: 900px;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        .process-steps::before {
-            content: '';
-            position: absolute;
-            top: 40px;
-            left: 60px;
-            right: 60px;
-            height: 3px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            z-index: 1;
-        }
-
-        .process-step {
-            text-align: center;
-            position: relative;
-            z-index: 2;
-            width: 180px;
-        }
-
-        .step-number {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: var(--darker);
-            border: 3px solid var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-            font-weight: 700;
-            margin: 0 auto 20px;
-            color: var(--secondary);
-        }
-
-        .step-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: var(--light);
-        }
-
-        .step-description {
-            color: var(--gray);
-            font-size: 14px;
-        }
-
-        /* Features Section */
-        .features {
-            padding: 100px 0;
-            background: rgba(0, 0, 0, 0.2);
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .feature-card {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 15px;
-            padding: 30px;
-            transition: transform 0.3s, background 0.3s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .feature-icon {
-            font-size: 40px;
-            margin-bottom: 20px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .feature-card h3 {
-            font-size: 22px;
-            margin-bottom: 15px;
-        }
-
-        .feature-card p {
-            color: var(--gray);
-            line-height: 1.6;
-        }
-
-        /* About Section */
-        .about {
-            padding: 100px 0;
-            background: var(--dark);
-        }
-
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
-        }
-
-        .about-text h2 {
-            font-size: 40px;
-            margin-bottom: 20px;
-        }
-
-        .about-text p {
-            color: var(--gray);
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
-
-        .about-image {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 15px;
-            padding: 30px;
-            text-align: center;
-        }
-
-        .about-image i {
-            font-size: 100px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 20px;
-        }
-
-        .about-image h3 {
-            font-size: 24px;
-            margin-bottom: 15px;
-        }
-
-        /* Footer */
-        footer {
+        #input-container {
+            padding: 1rem;
             background: rgba(0, 0, 0, 0.3);
-            padding: 50px 0 20px;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-column h3 {
-            font-size: 18px;
-            margin-bottom: 20px;
-            color: var(--secondary);
-        }
-
-        .footer-column ul {
-            list-style: none;
-        }
-
-        .footer-column ul li {
-            margin-bottom: 10px;
-        }
-
-        .footer-column ul li a {
-            color: var(--gray);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-column ul li a:hover {
-            color: var(--secondary);
-        }
-
-        .social-icons {
+            border-top: 1px solid var(--quantum-border);
             display: flex;
-            gap: 15px;
+            gap: 0.5rem;
+            align-items: end;
+            flex-shrink: 0;
         }
 
-        .social-icons a {
-            color: var(--light);
-            font-size: 18px;
-            transition: color 0.3s;
+        #user-input {
+            flex: 1;
+            padding: 0.8rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--quantum-border);
+            border-radius: 12px;
+            color: white;
+            font-family: inherit;
+            resize: none;
+            min-height: 40px;
         }
 
-        .social-icons a:hover {
-            color: var(--secondary);
+        #send-btn {
+            padding: 0.8rem 1.2rem;
+            background: linear-gradient(135deg, var(--quantum-accent) 0%, var(--quantum-secondary) 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: inherit;
         }
 
-        .copyright {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--gray);
-            font-size: 14px;
+        #send-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
-        /* Progress bar */
-        .progress-bar {
-            height: 6px;
+        /* API Key Instructions */
+        #key-instructions {
+            display: none;
+            padding: 1rem;
+            background: rgba(0,0,0,0.2);
+            border-radius: 8px;
+            margin: 1rem 2rem;
+            border: 1px solid var(--quantum-border);
+        }
+
+        #key-instructions h4 {
+            margin-bottom: 0.5rem;
+            color: var(--quantum-accent);
+        }
+
+        #key-instructions ol {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+
+        #key-instructions a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        #key-instructions small {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            margin: 0;
+        }
+
+        #help-btn {
+            margin-left: 10px;
+            padding: 0.5rem;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid var(--quantum-border);
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Simple animations */
+        .message {
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
-            overflow: hidden;
-            margin: 15px 0;
         }
 
-        .progress {
-            height: 100%;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
+        ::-webkit-scrollbar-thumb {
+            background: var(--quantum-primary);
             border-radius: 3px;
-            width: 0%;
-            transition: width 0.5s ease;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .hero h1 {
-                font-size: 45px;
-            }
-            
-            .dashboard-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .process-steps {
-                flex-direction: column;
-                align-items: center;
-                gap: 40px;
-            }
-            
-            .process-steps::before {
-                display: none;
-            }
-            
-            .hero-image {
-                position: relative;
-                width: 100%;
-                margin-top: 40px;
-            }
-            
-            .about-content {
-                grid-template-columns: 1fr;
-            }
         }
 
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
+            .header {
+                padding: 0.5rem;
+                flex-direction: column;
+                gap: 0.5rem;
             }
             
-            .hero h1 {
-                font-size: 36px;
-            }
-            
-            .hero-buttons {
+            #api-key-container {
+                padding: 0.5rem;
                 flex-direction: column;
             }
             
-            .feature-card {
-                text-align: center;
+            #api-key-input {
+                width: 100%;
             }
             
-            .export-options {
-                grid-template-columns: 1fr;
+            .message {
+                max-width: 85%;
             }
             
-            .model-stats {
-                flex-direction: column;
-                gap: 10px;
+            .welcome-message h2 {
+                font-size: 1.5rem;
+            }
+
+            #key-instructions {
+                margin: 0.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Header & Navigation -->
-    <header>
-        <div class="container">
-            <nav>
-                <div class="logo" onclick="showPage('home')">Quantum Star Labs</div>
-                <div class="nav-links">
-                    <a class="active" onclick="showPage('home')">Home</a>
-                    <a onclick="showPage('train')">Train</a>
-                    <a onclick="showPage('export')">Export</a>
-                    <a onclick="showPage('about')">About</a>
-                </div>
-                <button class="cta-button" onclick="showPage('train')">Get Started</button>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Page Container -->
-    <div class="page-container">
-        <!-- Home Page -->
-        <div id="home" class="page active">
-            <section class="hero">
-                <div class="container">
-                    <div class="hero-content">
-                        <h1>Train Your Own <span>AI Model</span></h1>
-                        <p>Quantum Star Labs allows you to build, train, and customize your own AI models with millions of potential responses. No coding required - just teach your AI through conversation.</p>
-                        <div class="hero-buttons">
-                            <button class="cta-button" onclick="showPage('train')">Start Training</button>
-                            <button class="outline-button" onclick="showPage('export')">Export Options</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
-                        <g transform="translate(300,300)">
-                            <path d="M117,-133.5C148.3,-93.7,167.9,-46.9,171.2,2.7C174.5,52.2,161.5,104.5,130.2,137.2C99,169.8,49.5,182.9,-3.3,186.2C-56,189.5,-112,183,-142.5,150.3C-173,117.6,-178,58.8,-168.8,8.7C-159.6,-41.3,-136.3,-82.7,-105.7,-122.5C-75,-162.3,-37.5,-200.6,4.3,-204.9C46.1,-209.2,92.2,-179.5,117,-133.5Z" fill="url(#gradient)" />
-                            <defs>
-                                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                    <stop offset="0%" stop-color="#6e3cfa" />
-                                    <stop offset="100%" stop-color="#2ad3c5" />
-                                </linearGradient>
-                            </defs>
-                        </g>
-                    </svg>
-                </div>
-            </section>
-
-            <section class="features">
-                <div class="container">
-                    <div class="section-title">
-                        <h2>Powerful Training Features</h2>
-                        <p>Our platform provides everything you need to create a sophisticated AI model.</p>
-                    </div>
-                    <div class="features-grid">
-                        <div class="feature-card floating">
-                            <div class="feature-icon">
-                                <i class="fas fa-database"></i>
-                            </div>
-                            <h3>Unlimited Training Data</h3>
-                            <p>Train your AI with as many examples as you want. There's no limit to how much your model can learn.</p>
-                        </div>
-                        <div class="feature-card floating" style="animation-delay: 0.5s;">
-                            <div class="feature-icon">
-                                <i class="fas fa-robot"></i>
-                            </div>
-                            <h3>Neural Network Architecture</h3>
-                            <p>Our advanced neural networks can understand context and generate appropriate responses.</p>
-                        </div>
-                        <div class="feature-card floating" style="animation-delay: 1s;">
-                            <div class="feature-icon">
-                                <i class="fas fa-cloud-download-alt"></i>
-                            </div>
-                            <h3>Export Your Model</h3>
-                            <p>Once trained, export your AI model to use in your applications, websites, or services.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-
-        <!-- Train Page -->
-        <div id="train" class="page">
-            <section class="dashboard">
-                <div class="container">
-                    <div class="section-title">
-                        <h2>AI Training Dashboard</h2>
-                        <p>Teach your AI model by providing question-answer pairs. The more you teach, the smarter it becomes.</p>
-                    </div>
-                    <div class="dashboard-container">
-                        <div class="training-section">
-                            <h3>Train Your AI</h3>
-                            <div class="training-form">
-                                <div class="form-group">
-                                    <label for="question">Question/Input</label>
-                                    <input type="text" id="question" placeholder="What would you like to ask?">
-                                </div>
-                                <div class="form-group">
-                                    <label for="answer">Desired Response</label>
-                                    <textarea id="answer" placeholder="How should the AI respond?"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label for="category">Category (optional)</label>
-                                    <input type="text" id="category" placeholder="E.g., greetings, facts, jokes">
-                                </div>
-                                <button class="training-button" id="train-button">
-                                    <i class="fas fa-brain"></i> Train AI with this Example
-                                </button>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress" id="training-progress"></div>
-                            </div>
-                            <p id="training-status">Training progress: 0 examples</p>
-                        </div>
-                        <div class="ai-preview">
-                            <div class="preview-header">
-                                <h3>AI Preview</h3>
-                                <div class="cta-button" id="test-button">Test AI</div>
-                            </div>
-                            <div class="model-stats">
-                                <div class="stat">
-                                    <div class="stat-value" id="examples-trained">0</div>
-                                    <div class="stat-label">Examples Trained</div>
-                                </div>
-                                <div class="stat">
-                                    <div class="stat-value" id="response-quality">0%</div>
-                                    <div class="stat-label">Response Quality</div>
-                                </div>
-                                <div class="stat">
-                                    <div class="stat-value" id="model-size">0KB</div>
-                                    <div class="stat-label">Model Size</div>
-                                </div>
-                            </div>
-                            <div class="preview-chat" id="preview-chat">
-                                <div class="chat-message ai-message">Hello! I'm your AI model. Train me with examples and I'll learn to respond to various inputs.</div>
-                            </div>
-                            <div class="chat-input">
-                                <input type="text" id="test-input" placeholder="Test your AI...">
-                                <button id="chat-button"><i class="fas fa-paper-plane"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-
-        <!-- Export Page -->
-        <div id="export" class="page">
-            <section class="export">
-                <div class="container">
-                    <div class="section-title">
-                        <h2>Export Your AI Model</h2>
-                        <p>Choose where to deploy your trained AI model. We support multiple export options for different use cases.</p>
-                    </div>
-                    <div class="export-options">
-                        <div class="export-card">
-                            <div class="export-icon">
-                                <i class="fas fa-globe"></i>
-                            </div>
-                            <h3>Web Application</h3>
-                            <p>Integrate your AI directly into websites and web applications with our JavaScript SDK.</p>
-                            <ul>
-                                <li>Easy integration with React, Vue, Angular</li>
-                                <li>Real-time inference in the browser</li>
-                                <li>No server required</li>
-                                <li>Progressive Web App support</li>
-                            </ul>
-                            <a href="#" class="export-button">Export for Web</a>
-                        </div>
-                        <div class="export-card">
-                            <div class="export-icon">
-                                <i class="fas fa-server"></i>
-                            </div>
-                            <h3>API Endpoint</h3>
-                            <p>Deploy your AI as a REST API endpoint that can be called from any application.</p>
-                            <ul>
-                                <li>Scalable cloud deployment</li>
-                                <li>Auto-scaling based on demand</li>
-                                <li>Webhooks for notifications</li>
-                                <li>Comprehensive API documentation</li>
-                            </ul>
-                            <a href="#" class="export-button">Deploy as API</a>
-                        </div>
-                        <div class="export-card">
-                            <div class="export-icon">
-                                <i class="fas fa-mobile-alt"></i>
-                            </div>
-                            <h3>Mobile App</h3>
-                            <p>Export your AI for iOS and Android applications with optimized performance.</p>
-                            <ul>
-                                <li>Native iOS and Android SDKs</li>
-                                <li>Offline capability</li>
-                                <li>Optimized for mobile hardware</li>
-                                <li>Privacy-focused on-device processing</li>
-                            </ul>
-                            <a href="#" class="export-button">Export for Mobile</a>
-                        </div>
-                    </div>
-                    <div class="export-options">
-                        <div class="export-card">
-                            <div class="export-icon">
-                                <i class="fas fa-cloud"></i>
-                            </div>
-                            <h3>Cloud Platform</h3>
-                            <p>Deploy your AI on major cloud platforms with one-click installation.</p>
-                            <ul>
-                                <li>AWS, Google Cloud, and Azure support</li>
-                                <li>Containerized deployment (Docker)</li>
-                                <li>Serverless function options</li>
-                                <li>Managed infrastructure</li>
-                            </ul>
-                            <a href="#" class="export-button">Deploy to Cloud</a>
-                        </div>
-                        <div class="export-card">
-                            <div class="export-icon">
-                                <i class="fas fa-code"></i>
-                            </div>
-                            <h3>Standalone Package</h3>
-                            <p>Download your AI as a standalone package for custom deployment.</p>
-                            <ul>
-                                <li>Python package (PyPI)</li>
-                                <li>Node.js module (NPM)</li>
-                                <li>Docker container image</li>
-                                <li>Raw model files for custom implementations</li>
-                            </ul>
-                            <a href="#" class="export-button">Download Package</a>
-                        </div>
-                        <div class="export-card">
-                            <div class="export-icon">
-                                <i class="fas fa-robot"></i>
-                            </div>
-                            <h3>IoT Device</h3>
-                            <p>Optimize and export your AI for edge devices and IoT applications.</p>
-                            <ul>
-                                <li>Hardware-optimized versions</li>
-                                <li>Low power consumption</li>
-                                <li>Small footprint for constrained devices</li>
-                                <li>Real-time processing capabilities</li>
-                            </ul>
-                            <a href="#" class="export-button">Export for IoT</a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="process">
-                <div class="container">
-                    <div class="section-title">
-                        <h2>Simple Export Process</h2>
-                        <p>Exporting your trained AI model is straightforward with our step-by-step process.</p>
-                    </div>
-                    <div class="process-steps">
-                        <div class="process-step">
-                            <div class="step-number">1</div>
-                            <div class="step-title">Train Your AI</div>
-                            <div class="step-description">Teach your AI model with examples until it performs to your satisfaction.</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">2</div>
-                            <div class="step-title">Select Export Option</div>
-                            <div class="step-description">Choose where you want to deploy your AI model based on your needs.</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">3</div>
-                            <div class="step-title">Configure Settings</div>
-                            <div class="step-description">Customize performance, security, and scalability options for your deployment.</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">4</div>
-                            <div class="step-title">Export & Deploy</div>
-                            <div class="step-description">Download your package or deploy directly to your chosen platform with one click.</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-
-        <!-- About Page -->
-        <div id="about" class="page">
-            <section class="about">
-                <div class="container">
-                    <div class="section-title">
-                        <h2>About Quantum Star Labs</h2>
-                        <p>Learn about our mission to make AI accessible to everyone.</p>
-                    </div>
-                    <div class="about-content">
-                        <div class="about-text">
-                            <h2>Democratizing AI Development</h2>
-                            <p>Quantum STAR LABS was founded with the vision of making artificial intelligence accessible to everyone, regardless of their technical background or coding experience.</p>
-                            <p>We believe that the power of AI should not be limited to large tech companies with extensive resources. Our platform enables individuals, small businesses, and organizations to create custom AI solutions tailored to their specific needs.</p>
-                            <p>With an intuitive interface and powerful underlying technology, Quantum Labs simplifies the process of creating, training, and deploying AI models.</p>
-                            <button class="cta-button" onclick="showPage('train')">Start Building Your AI</button>
-                        </div>
-                        <div class="about-image">
-                            <i class="fas fa-brain"></i>
-                            <h3>Our Mission</h3>
-                            <p>To empower everyone to create and use artificial intelligence to solve real-world problems.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="features">
-                <div class="container">
-                    <div class="section-title">
-                        <h2>Our Values</h2>
-                        <p>The principles that guide everything we do at NeuroTrainer.</p>
-                    </div>
-                    <div class="features-grid">
-                        <div class="feature-card">
-                            <div class="feature-icon">
-                                <i class="fas fa-unlock"></i>
-                            </div>
-                            <h3>Accessibility</h3>
-                            <p>We believe AI technology should be accessible to everyone, not just those with technical expertise.</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">
-                                <i class="fas fa-shield-alt"></i>
-                            </div>
-                            <h3>Privacy & Security</h3>
-                            <p>Your data and AI models are protected with enterprise-grade security measures and privacy controls.</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">
-                                <i class="fas fa-rocket"></i>
-                            </div>
-                            <h3>Innovation</h3>
-                            <p>We continuously improve our platform with the latest advancements in AI research and technology.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+    <!-- Header -->
+    <div class="header">
+        <div class="logo">QUANTUM LABS AI</div>
+        <div class="controls">
+            <select id="model-selector">
+                <option value="open-mistral-7b">Mistral 7B</option>
+                <option value="open-mixtral-8x7b">Mixtral 8x7B</option>
+                <option value="mistral-small-latest" selected>Mistral Small</option>
+                <option value="mistral-large-latest">Mistral Large</option>
+            </select>
+            <button id="theme-toggle">🌙</button>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>Quntum Labs</h3>
-                    <p>Build custom AI models through intuitive training interfaces.</p>
-                    <div class="social-icons">
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-github"></i></a>
-                        <a href="#"><i class="fab fa-discord"></i></a>
-                    </div>
-                </div>
-                <div class="footer-column">
-                    <h3>Products</h3>
-                    <ul>
-                        <li><a onclick="showPage('train')">AI Trainer</a></li>
-                        <li><a href="#">Model Marketplace</a></li>
-                        <li><a onclick="showPage('export')">Export Options</a></li>
-                        <li><a href="#">Enterprise Solutions</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Resources</h3>
-                    <ul>
-                        <li><a href="#">Documentation</a></li>
-                        <li><a href="#">Tutorials</a></li>
-                        <li><a href="#">Case Studies</a></li>
-                        <li><a href="#">Research Papers</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Company</h3>
-                    <ul>
-                        <li><a onclick="showPage('about')">About Us</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Contact</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>&copy; 2025 Quantum Star Labs AI. All rights reserved.</p>
-            </div>
+    <!-- API Key Input Section -->
+    <div id="api-key-container">
+        <input type="password" id="api-key-input" placeholder="Enter your Mistral AI API Key" />
+        <button id="save-key-btn">Connect</button>
+        <button id="help-btn">?</button>
+    </div>
+
+    <!-- Chat History Display -->
+    <div id="chat-container">
+        <div class="welcome-message">
+            <h2>WELCOME TO QUANTUM LABS AI</h2>
+            <p>Experience the future of conversational AI</p>
+            <p>Enter your API key above to begin your journey</p>
+            <p>🔒 Your key is stored locally and never shared</p>
         </div>
-    </footer>
+    </div>
+
+    <!-- User Input Area -->
+    <div id="input-container">
+        <textarea id="user-input" placeholder="Enter your quantum query..." rows="1" disabled></textarea>
+        <button id="send-btn" disabled>Send</button>
+    </div>
 
     <script>
-        // Page navigation functionality
-        function showPage(pageId) {
-            // Hide all pages
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
+        // DOM Elements
+        const apiKeyInput = document.getElementById('api-key-input');
+        const saveKeyBtn = document.getElementById('save-key-btn');
+        const modelSelector = document.getElementById('model-selector');
+        const chatContainer = document.getElementById('chat-container');
+        const userInput = document.getElementById('user-input');
+        const sendBtn = document.getElementById('send-btn');
+        const themeToggle = document.getElementById('theme-toggle');
+        const welcomeMessage = document.querySelector('.welcome-message');
+        const helpBtn = document.getElementById('help-btn');
+        const keyInstructions = document.getElementById('key-instructions');
+
+        // State
+        let apiKey = '';
+        let currentModel = 'mistral-small-latest';
+
+        // Initialize
+        function initialize() {
+            const savedKey = localStorage.getItem('mistral-api-key');
+            const savedModel = localStorage.getItem('mistral-model');
             
-            // Show selected page
-            document.getElementById(pageId).classList.add('active');
-            
-            // Update navigation links
-            document.querySelectorAll('.nav-links a').forEach(link => {
-                link.classList.remove('active');
-            });
-            
-            // Find and activate the correct nav link
-            document.querySelectorAll('.nav-links a').forEach(link => {
-                if (link.textContent.toLowerCase() === pageId) {
-                    link.classList.add('active');
+            if (savedKey) {
+                apiKeyInput.value = '••••••••••••••••';
+                apiKey = savedKey;
+                sendBtn.disabled = false;
+                userInput.disabled = false;
+                if (welcomeMessage) {
+                    welcomeMessage.style.display = 'none';
                 }
-            });
-            
-            // Special case for home page
-            if (pageId === 'home') {
-                document.querySelector('.nav-links a:first-child').classList.add('active');
             }
-            
-            // Scroll to top
-            window.scrollTo(0, 0);
+            if (savedModel) {
+                modelSelector.value = savedModel;
+                currentModel = savedModel;
+            }
+
+            // Set up event listeners
+            setupEventListeners();
         }
 
-        // AI Training functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const questionInput = document.getElementById('question');
-            const answerInput = document.getElementById('answer');
-            const trainButton = document.getElementById('train-button');
-            const trainingProgress = document.getElementById('training-progress');
-            const trainingStatus = document.getElementById('training-status');
-            const examplesTrained = document.getElementById('examples-trained');
-            const responseQuality = document.getElementById('response-quality');
-            const modelSize = document.getElementById('model-size');
-            const testInput = document.getElementById('test-input');
-            const chatButton = document.getElementById('chat-button');
-            const previewChat = document.getElementById('preview-chat');
-            const testButton = document.getElementById('test-button');
-            
-            // Training data storage
-            let trainingData = [];
-            let trainingCount = 0;
-            let qualityScore = 0;
-            
-            // Initialize with some basic examples
-            const initialExamples = [
-                { question: "Hello", answer: "Hi there! How can I help you today?" },
-                { question: "What is your name?", answer: "I'm an AI model created by you! You can call me whatever you like." },
-                { question: "How does this work?", answer: "You teach me by providing questions and answers. The more you train me, the better I become!" }
-            ];
-            
-            // Add initial examples to training data
-            initialExamples.forEach(example => {
-                trainingData.push(example);
-                trainingCount++;
+        function showKeyInstructions() {
+            keyInstructions.style.display = 'block';
+        }
+
+        function hideKeyInstructions() {
+            keyInstructions.style.display = 'none';
+        }
+
+        function setupEventListeners() {
+            // Theme toggle
+            themeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                themeToggle.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+                localStorage.setItem('dark-mode', document.body.classList.contains('dark-mode'));
             });
-            
-            // Update UI with initial data
-            updateTrainingUI();
-            
-            // Train button event listener
-            trainButton.addEventListener('click', function() {
-                const question = questionInput.value.trim();
-                const answer = answerInput.value.trim();
+
+            // API key instructions
+            apiKeyInput.addEventListener('focus', showKeyInstructions);
+            apiKeyInput.addEventListener('blur', hideKeyInstructions);
+            helpBtn.addEventListener('click', showKeyInstructions);
+
+            // Auto-resize textarea
+            userInput.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight) + 'px';
                 
-                if (question && answer) {
-                    // Add to training data
-                    trainingData.push({ question, answer });
-                    trainingCount++;
-                    
-                    // Update UI
-                    updateTrainingUI();
-                    
-                    // Show success message
-                    addMessageToChat("AI", "Thanks for the training example! I'll remember that.", true);
-                    
-                    // Clear inputs
-                    questionInput.value = '';
-                    answerInput.value = '';
-                    
-                    // Simulate training process
-                    simulateTraining();
+                if (welcomeMessage && this.value.trim().length > 0) {
+                    welcomeMessage.style.display = 'none';
+                }
+            });
+
+            // Save API Key
+            saveKeyBtn.addEventListener('click', saveApiKey);
+            
+            // Model selection
+            modelSelector.addEventListener('change', () => {
+                currentModel = modelSelector.value;
+                localStorage.setItem('mistral-model', currentModel);
+            });
+
+            // Send message
+            sendBtn.addEventListener('click', sendMessage);
+            userInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+        }
+
+        function saveApiKey() {
+            const key = apiKeyInput.value.trim();
+            if (key) {
+                apiKey = key;
+                currentModel = modelSelector.value;
+                localStorage.setItem('mistral-api-key', key);
+                localStorage.setItem('mistral-model', currentModel);
+                apiKeyInput.type = 'password';
+                apiKeyInput.value = '••••••••••••••••';
+                sendBtn.disabled = false;
+                userInput.disabled = false;
+                if (welcomeMessage) {
+                    welcomeMessage.style.display = 'none';
+                }
+                addMessage("Quantum connection established. How can I assist you today?", 'ai');
+                hideKeyInstructions();
+            } else {
+                alert("Please enter a valid API key to initialize quantum systems.");
+            }
+        }
+
+        function addMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message');
+            messageDiv.classList.add(sender + '-message');
+            messageDiv.textContent = text;
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            return messageDiv;
+        }
+
+        async function sendMessage() {
+            const message = userInput.value.trim();
+            if (!message || !apiKey) return;
+
+            userInput.value = '';
+            userInput.style.height = 'auto';
+            sendBtn.disabled = true;
+
+            addMessage(message, 'user');
+            const thinkingElement = addMessage("🔮 Quantum processing...", 'ai');
+
+            try {
+                const response = await fetch('https://api.mistral.ai/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${apiKey}`
+                    },
+                    body: JSON.stringify({
+                        model: currentModel,
+                        messages: [{ role: 'user', content: message }],
+                        temperature: 0.7
+                    })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(`API Error: ${response.status} - ${errorData.error?.message || response.statusText}`);
+                }
+
+                const data = await response.json();
+                chatContainer.removeChild(thinkingElement);
+                const aiResponse = data.choices[0].message.content;
+                addMessage(aiResponse, 'ai');
+
+            } catch (error) {
+                chatContainer.removeChild(thinkingElement);
+                let errorMessage = "Error: ";
+                
+                if (error.message.includes('401')) {
+                    errorMessage += "Invalid API key. Please check your key.";
+                } else if (error.message.includes('429')) {
+                    errorMessage += "Rate limit exceeded. Please wait.";
                 } else {
-                    alert("Please provide both a question and an answer.");
+                    errorMessage += error.message;
                 }
-            });
-            
-            // Test chat functionality
-            chatButton.addEventListener('click', testAI);
-            testInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    testAI();
-                }
-            });
-            
-            // Test button event listener
-            testButton.addEventListener('click', function() {
-                testInput.focus();
-                addMessageToChat("AI", "I'm ready for testing! Try asking me something.", true);
-            });
-            
-            // Function to test the AI
-            function testAI() {
-                const message = testInput.value.trim();
-                if (message) {
-                    // Add user message to chat
-                    addMessageToChat("You", message, false);
-                    
-                    // Clear input
-                    testInput.value = '';
-                    
-                    // Generate AI response
-                    setTimeout(() => {
-                        const response = generateResponse(message);
-                        addMessageToChat("AI", response, true);
-                    }, 600);
-                }
+
+                addMessage(errorMessage, 'ai');
+                console.error("Error:", error);
+            } finally {
+                sendBtn.disabled = false;
             }
-            
-            // Function to generate AI response based on training
-            function generateResponse(input) {
-                // Convert input to lowercase for easier matching
-                const lowerInput = input.toLowerCase();
-                
-                // Exact match check
-                for (const example of trainingData) {
-                    if (example.question.toLowerCase() === lowerInput) {
-                        return example.answer;
-                    }
-                }
-                
-                // Partial match check
-                for (const example of trainingData) {
-                    if (lowerInput.includes(example.question.toLowerCase()) || 
-                        example.question.toLowerCase().includes(lowerInput)) {
-                        return example.answer;
-                    }
-                }
-                
-                // Similarity check (simple implementation)
-                for (const example of trainingData) {
-                    const similarity = calculateSimilarity(lowerInput, example.question.toLowerCase());
-                    if (similarity > 0.6) {
-                        return example.answer;
-                    }
-                }
-                
-                // If no match found, use a default response
-                const defaultResponses = [
-                    "I'm not sure how to respond to that. Can you train me with an appropriate response?",
-                    "That's an interesting question. What should I say when asked that?",
-                    "I don't have a response for that yet. Please provide a training example.",
-                    "I'm still learning. Can you teach me how to respond to that?"
-                ];
-                
-                return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
-            }
-            
-            // Simple similarity calculation
-            function calculateSimilarity(str1, str2) {
-                const words1 = str1.split(' ');
-                const words2 = str2.split(' ');
-                let matches = 0;
-                
-                for (const word1 of words1) {
-                    for (const word2 of words2) {
-                        if (word1 === word2) {
-                            matches++;
-                        }
-                    }
-                }
-                
-                return matches / Math.max(words1.length, words2.length);
-            }
-            
-            // Function to update training UI
-            function updateTrainingUI() {
-                // Update progress bar
-                const progressPercent = Math.min(100, (trainingCount / 50) * 100);
-                trainingProgress.style.width = `${progressPercent}%`;
-                
-                // Update status text
-                trainingStatus.textContent = `Training progress: ${trainingCount} examples`;
-                
-                // Update stats
-                examplesTrained.textContent = trainingCount;
-                
-                // Update quality score (simulated)
-                qualityScore = Math.min(100, 10 + (trainingCount * 2));
-                responseQuality.textContent = `${qualityScore}%`;
-                
-                // Update model size (simulated)
-                const sizeKB = Math.round(trainingCount * 0.5);
-                modelSize.textContent = `${sizeKB}KB`;
-            }
-            
-            // Function to simulate training process
-            function simulateTraining() {
-                trainButton.innerHTML = '<i class="fas fa-cog fa-spin"></i> Training...';
-                trainButton.disabled = true;
-                
-                setTimeout(() => {
-                    trainButton.innerHTML = '<i class="fas fa-brain"></i> Train AI with this Example';
-                    trainButton.disabled = false;
-                    
-                    // Randomly show improvement message
-                    if (Math.random() > 0.7) {
-                        addMessageToChat("AI", "I'm learning from your examples! My response quality is improving.", true);
-                    }
-                }, 1500);
-            }
-            
-            // Function to add message to chat
-            function addMessageToChat(sender, message, isAI) {
-                const messageDiv = document.createElement('div');
-                messageDiv.classList.add('chat-message');
-                messageDiv.classList.add(isAI ? 'ai-message' : 'user-message');
-                messageDiv.textContent = message;
-                
-                previewChat.appendChild(messageDiv);
-                previewChat.scrollTop = previewChat.scrollHeight;
-            }
-        });
+        }
+
+        // Initialize the app
+        initialize();
     </script>
 </body>
 </html>
